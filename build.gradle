@@ -1,11 +1,9 @@
 plugins {
-    id 'maven'
-    id 'com.enonic.defaults' version '1.0.3'
     id 'com.enonic.xp.app' version '1.1.0'
 }
 
 app {
-    name = 'com.enonic.app.test-site'
+    name = 'com.enonic.app.test_site'
     displayName = 'Test page App'
     vendorName = 'Enonic AS'
     vendorUrl = 'http://enonic.com'
