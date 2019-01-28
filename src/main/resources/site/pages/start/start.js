@@ -2,7 +2,7 @@ var portal = require('/lib/xp/portal');
 var thymeleaf = require('/lib/thymeleaf');
 
 function handleGet(req) {
-    var site = portal.getContent();
+    var site = portal.getSite();
 
     var params = {
         mainRegion: site.page.regions.main,
