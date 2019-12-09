@@ -11,6 +11,7 @@ target/
 .idea
 .sass-cache
 npm-debug.log
+.enonic
 .tscache
 .tab
 .tmp
