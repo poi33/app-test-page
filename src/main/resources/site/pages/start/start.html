@@ -8,8 +8,9 @@
 </head>
 
 <body>
+    <p>Stress test: <span th:remove="tag" th:text="${ stressUrl }"></span></p>
     <div id="mainRegion" data-portal-region="main">
-        <div th:if="${ mainRegion.components }" th:each="component : ${ mainRegion.components }" data-th-remove="tag">
+        <div th:if="${ mainRegion.components }" th:each="component : ${ mainRegion.components }" th:remove="tag">
             <div data-portal-component="${ component.path }" th:remove="tag"></div>
         </div>
     </div>

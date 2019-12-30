@@ -6,6 +6,7 @@ function handleGet(req) {
 
     var params = {
         mainRegion: site.page.regions.main,
+        stressUrl: portal.serviceUrl({ service: "init" }),
     };
 
     var view = resolve("start.html");

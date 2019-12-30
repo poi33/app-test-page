@@ -1,7 +1,8 @@
 <page>
   <display-name>Test-page</display-name>
-  <config>
-  </config>
+  <description>Test page</description>
+  <form>
+  </form>
   <regions>
     <region name="main"/>
   </regions>
