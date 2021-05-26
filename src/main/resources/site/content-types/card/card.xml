@@ -1,0 +1,716 @@
+<content-type>
+  <display-name>Card</display-name>
+  <description>Single card</description>
+  <super-type>base:structured</super-type>
+  <allow-child-content>false</allow-child-content>
+  <form>
+    <field-set>
+      <label>Card appearance</label>
+      <items>
+        <input type="RadioButton" name="background">
+          <label>Background</label>
+          <occurrences minimum="1" maximum="1" />
+          <config>
+            <option value="transparent">Transparent</option>
+            <option value="white">White</option>
+            <option value="gray-lightest">Light Grey</option>
+          </config>
+          <default>white</default>
+        </input>
+        <input type="CheckBox" name="hasShadow">
+          <label>Shadow</label>
+          <default>checked</default>
+        </input>
+        <!--mixin name="customClass" /-->  
+        <form>
+          <input name="customClass" type="TextLine">
+            <label>Custom CSS Class</label>
+            <help-text>Enter custom css classes, separated by a space.</help-text>
+            <occurrences minimum="0" maximum="1" />
+            <config>
+              <regexp>[a-zA-Z0-9_\-\s]+</regexp>
+            </config>
+          </input>
+        </form>
+      </items>
+    </field-set>
+  </form>
+</content-type>
+
+<!--
+<option-set name="style">
+      <label>Style</label>
+      <expanded>true</expanded>
+      <occurrences minimum="1" maximum="1" />
+      <options minimum="1" maximum="1">
+        <option name="button">
+          <default>true</default>
+          <label>Button Card</label>
+          <items>
+            <field-set>
+              <label>Header</label>
+              <items>
+                <input type="Checkbox" name="showHeader">
+                  <label>Show Header</label>
+                  <help-text>Will use the display name</help-text>
+                  <default>checked</default>
+                </input>
+                <input type="RadioButton" name="headerTag">
+                  <label>Header tag</label>
+                  <occurrences minimum="1" maximum="1" />
+                  <default>h4</default>
+                  <config>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                  </config>
+                </input>
+                <!--mixin name="borderColor" /-->
+                <input type="ComboBox" name="borderColor">
+                  <label>Border Color</label>
+                  <occurrences minimum="0" maximum="1" />
+                  <config>
+                    <option value="yellow">Yellow</option>
+                    <option value="orange">Orange</option>
+                    <option value="green">Green</option>
+                    <option value="gray-dark">Grey</option>
+                  </config>
+                  <default>orange</default>
+                </input>
+              </items>
+            </field-set>
+            <input type="TextArea" name="content">
+              <label>Content</label>
+              <occurrences minimum="0" maximum="1" />
+            </input>                
+            <item-set name="buttons">
+              <label>Button</label>
+              <occurrences minimum="0" maximum="0" />
+              <items>
+                <!--mixin name="button" /-->
+                <!--mixin name="optionlink" /-->
+                <option-set name="optionlink">
+                  <label>Optionlink</label>
+                  <expanded>false</expanded>
+                  <occurrences minimum="0" maximum="1"/>
+                  <options minimum="1" maximum="1">
+                      <option name="content">
+                          <label>Content</label>
+                          <items>
+                              <input name="text" type="TextLine">
+                                  <label>Link text</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Will fall back to content displayName if not set</help-text>
+                              </input>
+                              <input name="content" type="ContentSelector">
+                                  <label>Content (type to search)</label>
+                                  <occurrences minimum="1" maximum="1"/>
+                                  <config>
+                                      <allowPath>${site}</allowPath>
+                                      <treeMode>true</treeMode>
+                                  </config>
+                              </input>
+                              <input name="params" type="TextLine">
+                                  <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>
+                                      Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                                  </help-text>
+                              </input>
+                              <input name="target" type="RadioButton">
+                                  <label>Target</label>
+                                  <help-text>The target attribute specifies where to open the linked document
+                                  </help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="_self">Same frame</option>
+                                      <option value="_blank">New window or tab</option>
+                                  </config>
+                                  <default>_self</default>
+                              </input>
+                              <input name="type" type="RadioButton">
+                                  <label>URL type</label>
+                                  <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="server">server (default)</option>
+                                      <option value="absolute">absolute</option>
+                                  </config>
+                                  <default>server</default>
+                              </input>
+                              <input name="class" type="TextLine">
+                                  <label>Link class</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Add a link css class</help-text>
+                              </input>
+                          </items>
+                      </option>
+                      <option name="globalContent">
+                          <label>Global Content</label>
+                          <items>
+                              <input name="text" type="TextLine">
+                                  <label>Link text</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Will fall back to content displayName if not set</help-text>
+                              </input>
+                              <input name="content" type="ContentSelector">
+                                  <label>Content (type to search)</label>
+                                  <occurrences minimum="1" maximum="1"/>
+                                  <config>
+                                      <allowPath>*</allowPath>
+                                      <treeMode>true</treeMode>
+                                  </config>
+                              </input>
+                              <input name="params" type="TextLine">
+                                  <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>
+                                      Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                                  </help-text>
+                              </input>
+                              <input name="target" type="RadioButton">
+                                  <label>Target</label>
+                                  <help-text>The target attribute specifies where to open the linked document
+                                  </help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="_self">Same frame</option>
+                                      <option value="_blank">New window or tab</option>
+                                  </config>
+                                  <default>_self</default>
+                              </input>
+                              <input name="type" type="RadioButton">
+                                  <label>URL type</label>
+                                  <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="server">server (default)</option>
+                                      <option value="absolute">absolute</option>
+                                  </config>
+                                  <default>server</default>
+                              </input>
+                              <input name="class" type="TextLine">
+                                  <label>Link class</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Add a link css class</help-text>
+                              </input>
+                          </items>
+                      </option>
+                      <option name="url">
+                          <label>Url</label>
+                          <items>
+                              <input name="text" type="TextLine">
+                                  <label>Link text</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="url" type="TextLine">
+                                  <label>URL</label>
+                                  <occurrences minimum="1" maximum="1"/>
+                              </input>
+                              <input name="target" type="RadioButton">
+                                  <label>Target</label>
+                                  <help-text>The target attribute specifies where to open the linked document
+                                  </help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="_self">Same frame</option>
+                                      <option value="_blank">New window or tab</option>
+                                  </config>
+                                  <default>_self</default>
+                              </input>
+                              <input name="class" type="TextLine">
+                                  <label>Link class</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Add a link css class</help-text>
+                              </input>
+                          </items>
+                      </option>
+                      <option name="attachment">
+                          <label>Attachment</label>
+                          <items>
+                              <input name="text" type="TextLine">
+                                  <label>Link text</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Will fall back to attachment displayName if not set</help-text>
+                              </input>
+                              <input name="attachment" type="MediaSelector">
+                                  <label>Target</label>
+                                  <occurrences minimum="1" maximum="1"/>
+                                  <config>
+                                      <allowContentType>media:text</allowContentType>
+                                      <allowContentType>media:data</allowContentType>
+                                      <allowContentType>media:audio</allowContentType>
+                                      <allowContentType>media:video</allowContentType>
+                                      <allowContentType>media:image</allowContentType>
+                                      <allowContentType>media:archive</allowContentType>
+                                      <allowContentType>media:document</allowContentType>
+                                      <allowContentType>media:spreadsheet</allowContentType>
+                                      <allowContentType>media:presentation</allowContentType>
+                                      <allowContentType>media:executable</allowContentType>
+                                      <allowContentType>media:unknown</allowContentType>
+                                  </config>
+                              </input>
+                              <input name="params" type="TextLine">
+                                  <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>
+                                      Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                                  </help-text>
+                              </input>
+                              <input name="download" type="RadioButton">
+                                  <label>Download?</label>
+                                  <help-text>Set to true if the disposition header should be set to attachment, false if it should be set to inline
+                                  </help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="true">True</option>
+                                      <option value="false">False</option>
+                                  </config>
+                                  <default>true</default>
+                              </input>
+                              <input name="target" type="RadioButton">
+                                  <label>Target</label>
+                                  <help-text>The target attribute specifies where to open the linked document
+                                  </help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="_self">Same frame</option>
+                                      <option value="_blank">New window or tab</option>
+                                  </config>
+                                  <default>_self</default>
+                              </input>
+                              <input name="type" type="RadioButton">
+                                  <label>URL type</label>
+                                  <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                                  <occurrences minimum="0" maximum="0"/>
+                                  <config>
+                                      <option value="server">server (default)</option>
+                                      <option value="absolute">absolute</option>
+                                  </config>
+                                  <default>server</default>
+                              </input>
+                              <input name="class" type="TextLine">
+                                  <label>Link class</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Add a link css class</help-text>
+                              </input>
+                          </items>
+                      </option>
+                      <option name="email">
+                          <label>Email</label>
+                          <help-text>External url</help-text>
+                          <items>
+                              <input name="text" type="TextLine">
+                                  <label>Link text</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="email" type="TextLine">
+                                  <label>Email</label>
+                                  <occurrences minimum="1" maximum="1"/>
+                              </input>
+                              <input name="cc" type="TextLine">
+                                  <label>Cc</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="bcc" type="TextLine">
+                                  <label>Bcc</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="subject" type="TextLine">
+                                  <label>Subject</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="body" type="TextArea">
+                                  <label>Body (short plain text)</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                              </input>
+                              <input name="class" type="TextLine">
+                                  <label>Link class</label>
+                                  <occurrences minimum="0" maximum="1"/>
+                                  <help-text>Add a link css class</help-text>
+                              </input>
+                          </items>
+                      </option>
+                  </options>
+              </option-set>
+                <field-set name="style">
+                  <label>Appearance</label>
+                  <items>
+                    <input name="btnColor" type="RadioButton">
+                      <label>Color</label>
+                      <occurrences minimum="1" maximum="1" />
+                      <default>orange</default>
+                      <config>
+                        <option value="white">White</option>
+                        <option value="green">Green</option>
+                        <option value="orange">Orange</option>
+                        <option value="gray-medium">Grey</option>
+                        <option value="dark">Dark</option>
+                      </config>
+                    </input>
+                    <input name="btnStyle" type="RadioButton">
+                      <label>Style</label>
+                      <occurrences minimum="1" maximum="1" />
+                      <config>
+                        <option value="solid">Solid</option>
+                        <option value="outline">Outline</option>
+                      </config>
+                      <default>solid</default>
+                    </input>      
+                  </items>
+                </field-set>
+              </items>
+            </item-set>
+            <option-set name="readMore">
+              <label>Show Read More</label>
+              <expanded>false</expanded>
+              <occurrences minimum="1" maximum="1" />
+              <options minimum="0" maximum="1">
+                <option name="yes">
+                  <label>Yes</label>
+                  <items>
+                    <input type="TextLine" name="readMoreText">
+                      <label>Link text</label>
+                      <occurrences minimum="1" maximum="1" />
+                    </input>
+                    <!--mixin name="links" /-->
+                    <option-set name="url">
+                      <label>Link</label>
+                      <expanded>true</expanded>
+                      <occurrences minimum="1" maximum="1"/>
+                      <help-text>Please select the type of link you wish to create. The first option is used for linking outside of your site, while the
+                        second one is for internal links.
+                      </help-text>
+                      <options minimum="1" maximum="1">
+                        <option name="text">
+                          <label>External URL</label>
+                          <help-text>Add an URL to an external source. The URL should begin with "https" or "http". For example https://example.com.
+                            You can only use either "External URL" or "Link to a page". In case you fill both fields, "Link to a page" has priority.
+                          </help-text>
+                          <items>
+                            <input name="url" type="TextLine">
+                              <label>Full URL (including 'http')</label>
+                              <occurrences minimum="1" maximum="1"/>
+                            </input>
+                          </items>
+                        </option>
+                        <option name="content">
+                          <label>Link to another content</label>
+                          <default>true</default>
+                          <help-text>Select a page that you have already made and want the button to point to.
+                            You can only use either "External URL" or "Link to a page". In case you fill both fields, "Link to a page" has priority.
+                          </help-text>
+                          <items>
+                            <input name="key" type="ContentSelector">
+                              <label>Select page</label>
+                              <occurrences minimum="1" maximum="1"/>
+                              <config>
+                                <treeMode>true</treeMode>
+                                <hideToggleIcon>true</hideToggleIcon>
+                              </config>
+                            </input>
+                          </items>
+                        </option>
+                      </options>
+                    </option-set>
+                  </items>
+                </option>
+                <option name="no">
+                  <label>No</label>
+                  <default>true</default>
+                </option>
+              </options>
+            </option-set>                
+          </items>
+        </option>
+        <option name="link">
+          <label>Link Box</label>
+          <items>
+            <!--mixin name="optionlink"/-->
+            <option-set name="optionlink">
+              <label>Optionlink</label>
+              <expanded>false</expanded>
+              <occurrences minimum="0" maximum="1"/>
+              <options minimum="1" maximum="1">
+                  <option name="content">
+                      <label>Content</label>
+                      <items>
+                          <input name="text" type="TextLine">
+                              <label>Link text</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Will fall back to content displayName if not set</help-text>
+                          </input>
+                          <input name="content" type="ContentSelector">
+                              <label>Content (type to search)</label>
+                              <occurrences minimum="1" maximum="1"/>
+                              <config>
+                                  <allowPath>${site}</allowPath>
+                                  <treeMode>true</treeMode>
+                              </config>
+                          </input>
+                          <input name="params" type="TextLine">
+                              <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>
+                                  Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                              </help-text>
+                          </input>
+                          <input name="target" type="RadioButton">
+                              <label>Target</label>
+                              <help-text>The target attribute specifies where to open the linked document
+                              </help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="_self">Same frame</option>
+                                  <option value="_blank">New window or tab</option>
+                              </config>
+                              <default>_self</default>
+                          </input>
+                          <input name="type" type="RadioButton">
+                              <label>URL type</label>
+                              <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="server">server (default)</option>
+                                  <option value="absolute">absolute</option>
+                              </config>
+                              <default>server</default>
+                          </input>
+                          <input name="class" type="TextLine">
+                              <label>Link class</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Add a link css class</help-text>
+                          </input>
+                      </items>
+                  </option>
+                  <option name="globalContent">
+                      <label>Global Content</label>
+                      <items>
+                          <input name="text" type="TextLine">
+                              <label>Link text</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Will fall back to content displayName if not set</help-text>
+                          </input>
+                          <input name="content" type="ContentSelector">
+                              <label>Content (type to search)</label>
+                              <occurrences minimum="1" maximum="1"/>
+                              <config>
+                                  <allowPath>*</allowPath>
+                                  <treeMode>true</treeMode>
+                              </config>
+                          </input>
+                          <input name="params" type="TextLine">
+                              <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>
+                                  Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                              </help-text>
+                          </input>
+                          <input name="target" type="RadioButton">
+                              <label>Target</label>
+                              <help-text>The target attribute specifies where to open the linked document
+                              </help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="_self">Same frame</option>
+                                  <option value="_blank">New window or tab</option>
+                              </config>
+                              <default>_self</default>
+                          </input>
+                          <input name="type" type="RadioButton">
+                              <label>URL type</label>
+                              <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="server">server (default)</option>
+                                  <option value="absolute">absolute</option>
+                              </config>
+                              <default>server</default>
+                          </input>
+                          <input name="class" type="TextLine">
+                              <label>Link class</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Add a link css class</help-text>
+                          </input>
+                      </items>
+                  </option>
+                  <option name="url">
+                      <label>Url</label>
+                      <items>
+                          <input name="text" type="TextLine">
+                              <label>Link text</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="url" type="TextLine">
+                              <label>URL</label>
+                              <occurrences minimum="1" maximum="1"/>
+                          </input>
+                          <input name="target" type="RadioButton">
+                              <label>Target</label>
+                              <help-text>The target attribute specifies where to open the linked document
+                              </help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="_self">Same frame</option>
+                                  <option value="_blank">New window or tab</option>
+                              </config>
+                              <default>_self</default>
+                          </input>
+                          <input name="class" type="TextLine">
+                              <label>Link class</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Add a link css class</help-text>
+                          </input>
+                      </items>
+                  </option>
+                  <option name="attachment">
+                      <label>Attachment</label>
+                      <items>
+                          <input name="text" type="TextLine">
+                              <label>Link text</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Will fall back to attachment displayName if not set</help-text>
+                          </input>
+                          <input name="attachment" type="MediaSelector">
+                              <label>Target</label>
+                              <occurrences minimum="1" maximum="1"/>
+                              <config>
+                                  <allowContentType>media:text</allowContentType>
+                                  <allowContentType>media:data</allowContentType>
+                                  <allowContentType>media:audio</allowContentType>
+                                  <allowContentType>media:video</allowContentType>
+                                  <allowContentType>media:image</allowContentType>
+                                  <allowContentType>media:archive</allowContentType>
+                                  <allowContentType>media:document</allowContentType>
+                                  <allowContentType>media:spreadsheet</allowContentType>
+                                  <allowContentType>media:presentation</allowContentType>
+                                  <allowContentType>media:executable</allowContentType>
+                                  <allowContentType>media:unknown</allowContentType>
+                              </config>
+                          </input>
+                          <input name="params" type="TextLine">
+                              <label>Url parameters (? / &amp;) or/and url anchor (#)</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>
+                                  Prefix params with '?' and separate with &amp;. Add anchor after params, and prefix with '#'
+                              </help-text>
+                          </input>
+                          <input name="download" type="RadioButton">
+                              <label>Download?</label>
+                              <help-text>Set to true if the disposition header should be set to attachment, false if it should be set to inline
+                              </help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="true">True</option>
+                                  <option value="false">False</option>
+                              </config>
+                              <default>true</default>
+                          </input>
+                          <input name="target" type="RadioButton">
+                              <label>Target</label>
+                              <help-text>The target attribute specifies where to open the linked document
+                              </help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="_self">Same frame</option>
+                                  <option value="_blank">New window or tab</option>
+                              </config>
+                              <default>_self</default>
+                          </input>
+                          <input name="type" type="RadioButton">
+                              <label>URL type</label>
+                              <help-text>URL type. Either server (server-relative URL) or absolute.</help-text>
+                              <occurrences minimum="0" maximum="0"/>
+                              <config>
+                                  <option value="server">server (default)</option>
+                                  <option value="absolute">absolute</option>
+                              </config>
+                              <default>server</default>
+                          </input>
+                          <input name="class" type="TextLine">
+                              <label>Link class</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Add a link css class</help-text>
+                          </input>
+                      </items>
+                  </option>
+                  <option name="email">
+                      <label>Email</label>
+                      <help-text>External url</help-text>
+                      <items>
+                          <input name="text" type="TextLine">
+                              <label>Link text</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="email" type="TextLine">
+                              <label>Email</label>
+                              <occurrences minimum="1" maximum="1"/>
+                          </input>
+                          <input name="cc" type="TextLine">
+                              <label>Cc</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="bcc" type="TextLine">
+                              <label>Bcc</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="subject" type="TextLine">
+                              <label>Subject</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="body" type="TextArea">
+                              <label>Body (short plain text)</label>
+                              <occurrences minimum="0" maximum="1"/>
+                          </input>
+                          <input name="class" type="TextLine">
+                              <label>Link class</label>
+                              <occurrences minimum="0" maximum="1"/>
+                              <help-text>Add a link css class</help-text>
+                          </input>
+                      </items>
+                  </option>
+              </options>
+          </option-set>
+          </items>
+        </option>
+        <option name="custom">
+          <label>Custom Content</label>
+          <items>
+            <input type="HtmlArea" name="customContent">
+              <label>Content</label>
+              <occurrences minimum="1" maximum="1" />
+            </input>
+          </items>
+        </option>
+      </options>
+    </option-set>
+    <field-set>
+      <label>Card appearance</label>
+      <items>
+        <input type="RadioButton" name="background">
+          <label>Background</label>
+          <occurrences minimum="1" maximum="1" />
+          <config>
+            <option value="transparent">Transparent</option>
+            <option value="white">White</option>
+            <option value="gray-lightest">Light Grey</option>
+          </config>
+          <default>white</default>
+        </input>
+        <input type="CheckBox" name="hasShadow">
+          <label>Shadow</label>
+          <default>checked</default>
+        </input>
+        <!--mixin name="customClass" /-->  
+        <form>
+          <input name="customClass" type="TextLine">
+            <label>Custom CSS Class</label>
+            <help-text>Enter custom css classes, separated by a space.</help-text>
+            <occurrences minimum="0" maximum="1" />
+            <config>
+              <regexp>[a-zA-Z0-9_\-\s]+</regexp>
+            </config>
+          </input>
+        </form>
+      </items>
+    </field-set>
+-->
